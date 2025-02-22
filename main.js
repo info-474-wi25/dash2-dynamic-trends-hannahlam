@@ -22,8 +22,18 @@ const svg2_RENAME = d3.select("#lineChart2")
 // const tooltip = ...
 
 // 2.a: LOAD...
-d3.csv("YOUR_CSV_NAME.csv").then(data => {
+d3.csv("weather.csv").then(data => {
     // 2.b: ... AND TRANSFORM DATA
+    const parseDate = d3.timeParse("%m/%d/%Y");
+    data.forEach(d => {
+        d.date = parseDate(d.date);
+        d.actual_max_temp = +d.actual_max_temp;
+    });
+
+    const filteredData = data.filter(d =>
+        d.city === "Chicago" && d.month === 12 && d.year == 2014 && !isNaN(d.actual_max_temp)
+    );
+    console.log(filteredData)
 
     // 3.a: SET SCALES FOR CHART 1
 
